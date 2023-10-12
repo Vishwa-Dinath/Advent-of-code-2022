@@ -32,7 +32,8 @@ class ProblemTwoTest {
     void calculateMarksOfEachRoundTest() {
         ArrayList<String> strategyList = new ArrayList<>(Arrays.asList("A Y", "B X", "C Z"));
 
-        ArrayList<Integer> actual = ProblemTwo.calculateMarksOfEachRound(strategyList);
+        ArrayList<Integer> actual = ProblemTwo.calculateMarksOfEachRound(ProblemTwo.WIN_STRAT, ProblemTwo.LOSS_STRAT,
+                                                                        ProblemTwo.DRAW_STRAT, strategyList);
         ArrayList<Integer> expected = new ArrayList<>(Arrays.asList(8, 1, 6));
 
         assertEquals(expected,actual);
