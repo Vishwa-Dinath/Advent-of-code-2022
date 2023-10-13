@@ -59,9 +59,6 @@ public class ProblemTwo {
         return markSet.get(key);
     }
 
-    public static String selectPossibleResponse(String key) {
-        return null;
-    }
 
     public static ArrayList<Integer> calculateMarksOfEachRound(ArrayList<String> strategyList) {
         ArrayList<Integer> totalMarksOfRounds = new ArrayList<>();
