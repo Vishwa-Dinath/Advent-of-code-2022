@@ -9,6 +9,7 @@ public class ProblemTwoAnotherApproach {
 
     public static final HashMap<String, String> rulesForPlayerToWin = new HashMap<>();
     public static final HashMap<String, String> rulesForGameToDraw = new HashMap<>();
+    public static final HashMap<String, String> rulesForPlayerToLose = new HashMap<>();
     public static final HashMap<String, String> referenceForFirstPart = new HashMap<>();
 
     public static final HashMap<String, Integer> markSet = new HashMap<>();
@@ -35,6 +36,10 @@ public class ProblemTwoAnotherApproach {
         rulesForGameToDraw.put("O_ROCK", "P_ROCK");
         rulesForGameToDraw.put("O_PAPER", "P_PAPER");
         rulesForGameToDraw.put("O_SCISSOR", "P_SCISSOR");
+
+        rulesForPlayerToLose.put("O_ROCK", "P_SCISSOR");
+        rulesForPlayerToLose.put("O_PAPER", "P_ROCK");
+        rulesForPlayerToLose.put("O_SCISSOR", "P_PAPER");
 
         System.out.println(pipeLine_1("/problem_2/input.txt"));
 
@@ -67,9 +72,32 @@ public class ProblemTwoAnotherApproach {
         return markSet.get(key);
     }
 
-    public static int calculateMarksOfEachRound(String strategy) {
+    public static String[] getResponses(String strategy) {
         String opponentResponse = referenceForFirstPart.get(strategy.split(" ")[0]);
         String playerResponse = referenceForFirstPart.get(strategy.split(" ")[1]);
+        return new String[]{opponentResponse, playerResponse};
+    }
+
+    public static String[] getResponsesForPartTwo(String strategy) {
+        String opponentResponse = strategy.split(" ")[0];
+        String playerResponse = strategy.split(" ")[1];
+
+        if (playerResponse.equals("X")){
+            opponentResponse = referenceForFirstPart.get(opponentResponse);
+            playerResponse = rulesForPlayerToLose.get(opponentResponse);
+        } else if (playerResponse.equals("Y")) {
+            opponentResponse = referenceForFirstPart.get(opponentResponse);
+            playerResponse = rulesForGameToDraw.get(opponentResponse);
+        }else{
+            opponentResponse = referenceForFirstPart.get(opponentResponse);
+            playerResponse = rulesForPlayerToWin.get(opponentResponse);
+        }
+        return new String[]{opponentResponse, playerResponse};
+    }
+
+    public static int calculateMarksOfEachRound(String[] responses) {
+        String opponentResponse = responses[0];
+        String playerResponse = responses[1];
 
         int marksOfRounds = 0;
         if (doesPlayerWin(opponentResponse,playerResponse)){
@@ -82,10 +110,12 @@ public class ProblemTwoAnotherApproach {
         return marksOfRounds;
     }
 
+
     public static ArrayList<Integer> calculateMarksOfAllRounds(ArrayList<String> strategyList) {
         ArrayList<Integer> totalMarksOfRounds = new ArrayList<>();
         for (String strategy : strategyList) {
-            totalMarksOfRounds.add(calculateMarksOfEachRound(strategy));
+//            totalMarksOfRounds.add(calculateMarksOfEachRound(getResponses(strategy)));
+            totalMarksOfRounds.add(calculateMarksOfEachRound(getResponsesForPartTwo(strategy)));
         }
         return totalMarksOfRounds;
     }
