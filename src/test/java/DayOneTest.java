@@ -5,11 +5,11 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProblemOneTest {
+class DayOneTest {
 
     @Test
     void readInputFileTest() {
-        ArrayList<ArrayList<Integer>> actual = ProblemOne.readInputFile("/problem_1/input.txt");
+        ArrayList<ArrayList<Integer>> actual = DayOne.readInputFile("/problem_1/input.txt");
         ArrayList<ArrayList<Integer>> expected = new ArrayList<>();
         expected.add(new ArrayList<>(Arrays.asList(1000,2000,3000)));
         expected.add(new ArrayList<>(Arrays.asList(4000)));
@@ -29,7 +29,7 @@ class ProblemOneTest {
         caloriesList.add(new ArrayList<>(Arrays.asList(7000, 8000, 9000)));
         caloriesList.add(new ArrayList<>(Arrays.asList(10000)));
 
-        ArrayList<Integer> actual = ProblemOne.calculateSumsOfCaloriesOfElves(caloriesList);
+        ArrayList<Integer> actual = DayOne.calculateSumsOfCaloriesOfElves(caloriesList);
 
         ArrayList<Integer> expected = new ArrayList<>(Arrays.asList(6000, 4000, 11000, 24000, 10000));
 
@@ -40,7 +40,7 @@ class ProblemOneTest {
     void findMaxTotalCaloriesTest() {
         ArrayList<Integer> sumOfCalories = new ArrayList<>(Arrays.asList(6000, 4000, 11000, 24000, 10000));
 
-        int actual = ProblemOne.findMaxTotalCalories(sumOfCalories);
+        int actual = DayOne.findMaxTotalCalories(sumOfCalories);
         int expected = 24000;
 
         assertEquals(expected,actual);
@@ -50,7 +50,7 @@ class ProblemOneTest {
     void findThreeMaxCaloriesSumsTest() {
         ArrayList<Integer> sumOfCalories = new ArrayList<>(Arrays.asList(6000, 4000, 11000, 24000, 10000));
 
-        int actual = ProblemOne.findThreeMaxCaloriesSums(sumOfCalories);
+        int actual = DayOne.findThreeMaxCaloriesSums(sumOfCalories);
         int expected = 45000;
 
         assertEquals(expected,actual);
@@ -58,14 +58,14 @@ class ProblemOneTest {
 
     @Test
     void pipeLine_1Test() {
-        int actual = ProblemOne.pipeLine_1("/problem_1/input.txt");
+        int actual = DayOne.pipeLine_1("/problem_1/input.txt");
         int expected = 24000;
         assertEquals(expected,actual);
     }
 
     @Test
     void pipeLine_2Test() {
-        int actual = ProblemOne.pipeLine_2("/problem_1/input.txt");
+        int actual = DayOne.pipeLine_2("/problem_1/input.txt");
         int expected = 45000;
 
         assertEquals(expected,actual);
@@ -74,7 +74,7 @@ class ProblemOneTest {
     @Test
     void fileNotFoundTest() {
         assertThrows(RuntimeException.class,()->{
-            ProblemOne.pipeLine_1("/input1.txt");
+            DayOne.pipeLine_1("/input1.txt");
         });
     }
 

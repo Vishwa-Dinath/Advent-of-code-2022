@@ -3,10 +3,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
-public class ProblemTwo {
+public class DayTwo {
 
     public static final HashMap<String, String> possibleResponseSet = new HashMap<>();
 
@@ -33,7 +32,7 @@ public class ProblemTwo {
     }
 
     public static ArrayList<String> readInputFile(String filePath) {
-        InputStream is = ProblemTwo.class.getResourceAsStream(filePath);
+        InputStream is = DayTwo.class.getResourceAsStream(filePath);
 
         ArrayList<String> strategyList = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new InputStreamReader(is))){

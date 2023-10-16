@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.TreeSet;
 
-public class ProblemOne {
+public class DayOne {
     public static void main(String[] args) {
 
 //        System.out.println(pipeLine_1("/input.txt"));
@@ -15,7 +15,7 @@ public class ProblemOne {
         System.out.println(pipeLine_2("/problem_1/actual_input.txt"));
     }
     public static ArrayList<ArrayList<Integer>> readInputFile(String filePath) {
-        InputStream is = ProblemOne.class.getResourceAsStream(filePath);
+        InputStream is = DayOne.class.getResourceAsStream(filePath);
         try(BufferedReader br = new BufferedReader(new InputStreamReader(is))){
             String line;
             ArrayList<ArrayList<Integer>> caloriesList = new ArrayList<>();

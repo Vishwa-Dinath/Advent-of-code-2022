@@ -5,11 +5,11 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ProblemTwoTest {
+class DayTwoTest {
 
     @Test
     void readInputFileTest() {
-        ArrayList<String> actual = ProblemTwo.readInputFile("/problem_2/sample_input.txt");
+        ArrayList<String> actual = DayTwo.readInputFile("/problem_2/sample_input.txt");
         ArrayList<String> expected = new ArrayList<>();
         expected.add("A Y");
         expected.add("B X");
@@ -20,19 +20,19 @@ class ProblemTwoTest {
 
     @Test
     void getMarksTest() {
-        assertEquals(0,ProblemTwo.getMarks("lost"));
-        assertEquals(3,ProblemTwo.getMarks("draw"));
-        assertEquals(6,ProblemTwo.getMarks("won"));
-        assertEquals(1,ProblemTwo.getMarks("X"));
-        assertEquals(2,ProblemTwo.getMarks("Y"));
-        assertEquals(3,ProblemTwo.getMarks("Z"));
+        assertEquals(0, DayTwo.getMarks("lost"));
+        assertEquals(3, DayTwo.getMarks("draw"));
+        assertEquals(6, DayTwo.getMarks("won"));
+        assertEquals(1, DayTwo.getMarks("X"));
+        assertEquals(2, DayTwo.getMarks("Y"));
+        assertEquals(3, DayTwo.getMarks("Z"));
     }
 
     @Test
     void calculateMarksOfEachRoundTest() {
         ArrayList<String> strategyList = new ArrayList<>(Arrays.asList("A Y", "B X", "C Z"));
 
-        ArrayList<Integer> actual = ProblemTwo.calculateMarksOfEachRound(strategyList);
+        ArrayList<Integer> actual = DayTwo.calculateMarksOfEachRound(strategyList);
         ArrayList<Integer> expected = new ArrayList<>(Arrays.asList(8, 1, 6));
 
         assertEquals(expected,actual);
@@ -42,7 +42,7 @@ class ProblemTwoTest {
     void calculateTotalMarksOfAllRoundsTest() {
         ArrayList<Integer> totalMarksOfRounds = new ArrayList<>(Arrays.asList(8, 1, 6));
 
-        int actual = ProblemTwo.calculateTotalMarksOfAllRounds(totalMarksOfRounds);
+        int actual = DayTwo.calculateTotalMarksOfAllRounds(totalMarksOfRounds);
         int expected = 15;
 
         assertEquals(expected,actual);
@@ -50,7 +50,7 @@ class ProblemTwoTest {
 
     @Test
     void pipeLine_1_Test() {
-        int actual = ProblemTwo.pipeLine_1("/problem_2/sample_input.txt");
+        int actual = DayTwo.pipeLine_1("/problem_2/sample_input.txt");
         int expected = 15;
 
         assertEquals(expected,actual);

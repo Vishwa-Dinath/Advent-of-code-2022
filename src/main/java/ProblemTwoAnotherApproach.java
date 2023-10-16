@@ -10,17 +10,17 @@ public class ProblemTwoAnotherApproach {
     public static final HashMap<String, String> rulesForPlayerToWin = new HashMap<>();
     public static final HashMap<String, String> rulesForGameToDraw = new HashMap<>();
     public static final HashMap<String, String> rulesForPlayerToLose = new HashMap<>();
-    public static final HashMap<String, String> referenceForFirstPart = new HashMap<>();
+    public static final HashMap<String, String> reference = new HashMap<>();
 
     public static final HashMap<String, Integer> markSet = new HashMap<>();
 
     public static void main(String[] args) {
-        referenceForFirstPart.put("A", "O_ROCK");
-        referenceForFirstPart.put("B", "O_PAPER");
-        referenceForFirstPart.put("C", "O_SCISSOR");
-        referenceForFirstPart.put("X", "P_ROCK");
-        referenceForFirstPart.put("Y", "P_PAPER");
-        referenceForFirstPart.put("Z", "P_SCISSOR");
+        reference.put("A", "O_ROCK");
+        reference.put("B", "O_PAPER");
+        reference.put("C", "O_SCISSOR");
+        reference.put("X", "P_ROCK");
+        reference.put("Y", "P_PAPER");
+        reference.put("Z", "P_SCISSOR");
 
         markSet.put("P_ROCK", 1);
         markSet.put("P_PAPER", 2);
@@ -46,7 +46,7 @@ public class ProblemTwoAnotherApproach {
     }
 
     public static ArrayList<String> readInputFile(String filePath) {
-        InputStream is = ProblemTwo.class.getResourceAsStream(filePath);
+        InputStream is = DayTwo.class.getResourceAsStream(filePath);
 
         ArrayList<String> strategyList = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new InputStreamReader(is))){
@@ -73,8 +73,8 @@ public class ProblemTwoAnotherApproach {
     }
 
     public static String[] getResponses(String strategy) {
-        String opponentResponse = referenceForFirstPart.get(strategy.split(" ")[0]);
-        String playerResponse = referenceForFirstPart.get(strategy.split(" ")[1]);
+        String opponentResponse = reference.get(strategy.split(" ")[0]);
+        String playerResponse = reference.get(strategy.split(" ")[1]);
         return new String[]{opponentResponse, playerResponse};
     }
 
@@ -83,13 +83,13 @@ public class ProblemTwoAnotherApproach {
         String playerResponse = strategy.split(" ")[1];
 
         if (playerResponse.equals("X")){
-            opponentResponse = referenceForFirstPart.get(opponentResponse);
+            opponentResponse = reference.get(opponentResponse);
             playerResponse = rulesForPlayerToLose.get(opponentResponse);
         } else if (playerResponse.equals("Y")) {
-            opponentResponse = referenceForFirstPart.get(opponentResponse);
+            opponentResponse = reference.get(opponentResponse);
             playerResponse = rulesForGameToDraw.get(opponentResponse);
         }else{
-            opponentResponse = referenceForFirstPart.get(opponentResponse);
+            opponentResponse = reference.get(opponentResponse);
             playerResponse = rulesForPlayerToWin.get(opponentResponse);
         }
         return new String[]{opponentResponse, playerResponse};
