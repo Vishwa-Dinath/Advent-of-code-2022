@@ -1,3 +1,5 @@
+package day3;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,22 +34,6 @@ public class DayThree {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    // for part2
-    public static ArrayList<ArrayList<String>> getItemListByGroups(ArrayList<String> itemList) {
-        ArrayList<ArrayList<String>> itemListByGroup = new ArrayList<>();
-        int count = 0;
-        ArrayList<String> itemsOfAGroup = new ArrayList<>();
-
-        for (String items : itemList) {
-            itemsOfAGroup.add(items);
-            if (itemsOfAGroup.size() == 3) {
-                itemListByGroup.add(itemsOfAGroup);
-                itemsOfAGroup = new ArrayList<>();
-            }
-        }
-        return itemListByGroup;
     }
 
 
@@ -99,6 +85,22 @@ public class DayThree {
             sum += priorityValue;
         }
         return sum;
+    }
+
+    // for part2
+    public static ArrayList<ArrayList<String>> getItemListByGroups(ArrayList<String> itemList) {
+        ArrayList<ArrayList<String>> itemListByGroup = new ArrayList<>();
+        int count = 0;
+        ArrayList<String> itemsOfAGroup = new ArrayList<>();
+
+        for (String items : itemList) {
+            itemsOfAGroup.add(items);
+            if (itemsOfAGroup.size() == 3) {
+                itemListByGroup.add(itemsOfAGroup);
+                itemsOfAGroup = new ArrayList<>();
+            }
+        }
+        return itemListByGroup;
     }
 
     public static String findTheBadgeType(ArrayList<String> itemsOfAGroup) {

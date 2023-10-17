@@ -1,3 +1,7 @@
+package day2;
+
+import day2.DayTwo;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,3 +1,4 @@
+import day2.DayTwo;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
