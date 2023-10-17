@@ -10,8 +10,11 @@ public class DayFour {
     public static void main(String[] args) {
 //        System.out.println(getAssignmentPairs("/problem_4/sample_input.txt"));
 
-        System.out.println(pipeLine_1("/problem_4/sample_input.txt"));
-        System.out.println(pipeLine_1("/problem_4/input.txt"));
+//        System.out.println(pipeLine_1("/problem_4/sample_input.txt"));
+//        System.out.println(pipeLine_1("/problem_4/input.txt"));
+
+        System.out.println(pipeLine_2("/problem_4/sample_input.txt"));
+        System.out.println(pipeLine_2("/problem_4/input.txt"));
     }
 
     public static ArrayList<String> getAssignmentPairs(String filePath) {
@@ -62,8 +65,36 @@ public class DayFour {
         return false;
     }
 
+    public static int findAllOverlappedPairs(ArrayList<ArrayList<Range>> assignmentRangeList) {
+        int numberOfAllOverlappedPairs = 0;
+        for (ArrayList<Range> ranges : assignmentRangeList) {
+            Range firstElfRange = ranges.get(0);
+            Range secondElfRange = ranges.get(1);
+            if (doesOneContainOther(firstElfRange, secondElfRange)) {
+                numberOfAllOverlappedPairs++;
+            }
+        }
+        return numberOfAllOverlappedPairs;
+    }
+
+    public static boolean doesOneContainOther(Range firstElfRange, Range secondElfRange) {
+        if ((firstElfRange.start <= secondElfRange.start && firstElfRange.end >= secondElfRange.start) ||
+                secondElfRange.start <= firstElfRange.start && secondElfRange.end >= firstElfRange.start) {
+            return true;
+        }
+        return false;
+    }
+
     public static int pipeLine_1(String filePath) {
         return findFullyContainedPairs(
+                getAssignmentRanges(
+                        getAssignmentPairs(filePath)
+                )
+        );
+    }
+
+    public static int pipeLine_2(String filePath) {
+        return findAllOverlappedPairs(
                 getAssignmentRanges(
                         getAssignmentPairs(filePath)
                 )
