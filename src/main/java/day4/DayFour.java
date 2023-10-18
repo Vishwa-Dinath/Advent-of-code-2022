@@ -7,6 +7,13 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class DayFour {
+
+
+    public interface IntersectionFunction {
+        boolean intersect(Range firstElvRange,Range secondElvRange);
+    }
+
+
     public static void main(String[] args) {
 //        System.out.println(getAssignmentPairs("/problem_4/sample_input.txt"));
 
@@ -45,32 +52,31 @@ public class DayFour {
         return assignmentRangeList;
     }
 
-    public static int findFullyContainedPairs(ArrayList<ArrayList<Range>> assignmentRangeList) {
-        int numberOfFullyContainedPairs = 0;
-        for (ArrayList<Range> ranges : assignmentRangeList) {
-            Range firstElfRange = ranges.get(0);
-            Range secondElfRange = ranges.get(1);
-            if (doesOneFullyContainOther(firstElfRange, secondElfRange)) {
-                numberOfFullyContainedPairs++;
-            }
-        }
-        return numberOfFullyContainedPairs;
-    }
+//    public static int findFullyContainedPairs(ArrayList<ArrayList<Range>> assignmentRangeList) {
+//        int numberOfFullyContainedPairs = 0;
+//        for (ArrayList<Range> ranges : assignmentRangeList) {
+//            Range firstElfRange = ranges.get(0);
+//            Range secondElfRange = ranges.get(1);
+//            if (doesOneFullyContainOther(firstElfRange, secondElfRange)) {
+//                numberOfFullyContainedPairs++;
+//            }
+//        }
+//        return numberOfFullyContainedPairs;
+//    }
 
     public static boolean doesOneFullyContainOther(Range firstElfRange, Range secondElfRange) {
-        if ((firstElfRange.start <= secondElfRange.start && firstElfRange.end >= secondElfRange.end) ||
-                secondElfRange.start <= firstElfRange.start && secondElfRange.end >= firstElfRange.end) {
-            return true;
-        }
-        return false;
+        return (firstElfRange.start <= secondElfRange.start && firstElfRange.end >= secondElfRange.end) ||
+                secondElfRange.start <= firstElfRange.start && secondElfRange.end >= firstElfRange.end;
     }
 
-    public static int findAllOverlappedPairs(ArrayList<ArrayList<Range>> assignmentRangeList) {
+
+
+    public static int findOverlappedPairs(ArrayList<ArrayList<Range>> assignmentRangeList, IntersectionFunction intersectionFunction) {
         int numberOfAllOverlappedPairs = 0;
         for (ArrayList<Range> ranges : assignmentRangeList) {
             Range firstElfRange = ranges.get(0);
             Range secondElfRange = ranges.get(1);
-            if (doesOneContainOther(firstElfRange, secondElfRange)) {
+            if (intersectionFunction.intersect(firstElfRange,secondElfRange)) {
                 numberOfAllOverlappedPairs++;
             }
         }
@@ -86,18 +92,18 @@ public class DayFour {
     }
 
     public static int pipeLine_1(String filePath) {
-        return findFullyContainedPairs(
+        return findOverlappedPairs(
                 getAssignmentRanges(
                         getAssignmentPairs(filePath)
-                )
+                ), DayFour::doesOneFullyContainOther
         );
     }
 
     public static int pipeLine_2(String filePath) {
-        return findAllOverlappedPairs(
+        return findOverlappedPairs(
                 getAssignmentRanges(
                         getAssignmentPairs(filePath)
-                )
+                ),DayFour::doesOneContainOther
         );
     }
 }
