@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Stack;
 
 public class DayFive {
@@ -16,64 +17,32 @@ public class DayFive {
     public static ArrayList<Stack<String>> startingStack = new ArrayList<>();
 
     public static void main(String[] args) {
-//        initStartingStack();
-        initActualStartingStack();
+        initStartingStack();
 
 //        System.out.println(pipeLine1("/problem_5/sample_input.txt"));
+//        System.out.println(pipeLine2("/problem_5/sample_input.txt"));
 //        System.out.println(pipeLine1("/problem_5/input.txt"));
         System.out.println(pipeLine2("/problem_5/input.txt"));
     }
 
     public static void initStartingStack() {
-        int numberOfStacks = 3;
+        int numberOfStacksSample = 3;
+        int numberOfStacksActual = 9;
+        int numberOfStacks = numberOfStacksActual;
         for (int i = 0; i < numberOfStacks; i++) {
             startingStack.add(new Stack<>());
         }
-        startingStack.get(0).push("Z");
-        startingStack.get(0).push("N");
+        String[][] stackCratesSample = new String[][]{{"Z","N"},{"M","C","D"},{"P"}};
+        String[][] stackCratesActual = new String[][]{{"G","T","R","W"},{"G","C","H","P","M","S","V","W"},{"C","L","T","S","G","M"},
+                {"J","H","D","M","W","R","F"},{"P","Q","L","H","S","W","F","J"},{"P","J","D","N","F","M","S"},{"Z","B","D","F","G","C","S","J"},
+                {"R","T","B"},{"H","N","W","L","C"}};
+        String[][] stackCrates = stackCratesActual;
 
-        startingStack.get(1).push("M");
-        startingStack.get(1).push("C");
-        startingStack.get(1).push("D");
-
-        startingStack.get(2).push("P");
-    }
-
-    public static void initActualStartingStack() {
-        int numberOfStacks = 9;
         for (int i = 0; i < numberOfStacks; i++) {
-            startingStack.add(new Stack<>());
+            for (int j = 0; j < stackCrates[i].length; j++) {
+                startingStack.get(i).push(stackCrates[i][j]);
+            }
         }
-        startingStack.get(0).push("G");startingStack.get(0).push("T");
-        startingStack.get(0).push("R");startingStack.get(0).push("W");
-
-        startingStack.get(1).push("G");startingStack.get(1).push("C");startingStack.get(1).push("H");startingStack.get(1).push("P");
-        startingStack.get(1).push("M");startingStack.get(1).push("S");startingStack.get(1).push("V");startingStack.get(1).push("W");
-
-        startingStack.get(2).push("C");startingStack.get(2).push("L");startingStack.get(2).push("T");
-        startingStack.get(2).push("S");startingStack.get(2).push("G");startingStack.get(2).push("M");
-
-        startingStack.get(3).push("J");startingStack.get(3).push("H");startingStack.get(3).push("D");
-        startingStack.get(3).push("M");startingStack.get(3).push("W");startingStack.get(3).push("R");
-        startingStack.get(3).push("F");
-
-        startingStack.get(4).push("P");startingStack.get(4).push("Q");startingStack.get(4).push("L");
-        startingStack.get(4).push("H");startingStack.get(4).push("S");startingStack.get(4).push("W");
-        startingStack.get(4).push("F");startingStack.get(4).push("J");
-
-        startingStack.get(5).push("P");startingStack.get(5).push("J");startingStack.get(5).push("D");
-        startingStack.get(5).push("N");startingStack.get(5).push("F");startingStack.get(5).push("M");
-        startingStack.get(5).push("S");
-
-        startingStack.get(6).push("Z");startingStack.get(6).push("B");startingStack.get(6).push("D");
-        startingStack.get(6).push("F");startingStack.get(6).push("G");startingStack.get(6).push("C");
-        startingStack.get(6).push("S");startingStack.get(6).push("J");
-
-        startingStack.get(7).push("R");startingStack.get(7).push("T");startingStack.get(7).push("B");
-
-        startingStack.get(8).push("H");startingStack.get(8).push("N");startingStack.get(8).push("W");
-        startingStack.get(8).push("L");startingStack.get(8).push("C");
-
     }
 
     public static ArrayList<Procedure> readInputFile(String filePath) {
@@ -85,8 +54,8 @@ public class DayFive {
                 line = line.replaceAll("[A-Za-z]+","").trim();
                 String[] information = line.split("  ");
                 int numberOfCrates = Integer.parseInt(information[0]);
-                int source = Integer.parseInt(information[1]);
-                int destination = Integer.parseInt(information[2]);
+                int source = Integer.parseInt(information[1])-1;
+                int destination = Integer.parseInt(information[2])-1;
                 procedureList.add(new Procedure(numberOfCrates,source,destination));
             }
             return procedureList;
@@ -97,18 +66,18 @@ public class DayFive {
 
     public static void executeProcedure(Procedure procedure) {
         for (int i = 0; i < procedure.numberOfCrates; i++) {
-            String movedItem = startingStack.get(procedure.source-1).pop();
-            startingStack.get(procedure.destination-1).push(movedItem);
+            String movedItem = startingStack.get(procedure.source).pop();
+            startingStack.get(procedure.destination).push(movedItem);
         }
     }
 
     public static void executeMultipleCrateMovements(Procedure procedure) {
         Stack<String> temp = new Stack<>();
         for (int i = 0; i < procedure.numberOfCrates; i++) {
-            temp.push(startingStack.get(procedure.source - 1).pop());
+            temp.push(startingStack.get(procedure.source).pop());
         }
         for (int i = 0; i < procedure.numberOfCrates; i++) {
-            startingStack.get(procedure.destination - 1).push(temp.pop());
+            startingStack.get(procedure.destination).push(temp.pop());
         }
     }
 
@@ -149,5 +118,26 @@ class Procedure{
         this.numberOfCrates = numberOfCrates;
         this.source = source;
         this.destination = destination;
+    }
+
+    @Override
+    public String toString() {
+        return "Procedure{"  + numberOfCrates +
+                "," + source +
+                "," + destination +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Procedure procedure = (Procedure) o;
+        return numberOfCrates == procedure.numberOfCrates && source == procedure.source && destination == procedure.destination;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numberOfCrates, source, destination);
     }
 }
