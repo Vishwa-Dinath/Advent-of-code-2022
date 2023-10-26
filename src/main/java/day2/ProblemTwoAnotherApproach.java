@@ -7,46 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ProblemTwoAnotherApproach {
 
-    public static final HashMap<String, String> rulesForPlayerToWin = new HashMap<>();
-    public static final HashMap<String, String> rulesForGameToDraw = new HashMap<>();
-    public static final HashMap<String, String> rulesForPlayerToLose = new HashMap<>();
-    public static final HashMap<String, String> reference = new HashMap<>();
-
-    public static final HashMap<String, Integer> markSet = new HashMap<>();
-
     public static void main(String[] args) {
-        reference.put("A", "O_ROCK");
-        reference.put("B", "O_PAPER");
-        reference.put("C", "O_SCISSOR");
-        reference.put("X", "P_ROCK");
-        reference.put("Y", "P_PAPER");
-        reference.put("Z", "P_SCISSOR");
-
-        markSet.put("P_ROCK", 1);
-        markSet.put("P_PAPER", 2);
-        markSet.put("P_SCISSOR", 3);
-        markSet.put("LOST", 0);
-        markSet.put("DRAW", 3);
-        markSet.put("WON", 6);
-
-        rulesForPlayerToWin.put("O_ROCK", "P_PAPER");
-        rulesForPlayerToWin.put("O_PAPER", "P_SCISSOR");
-        rulesForPlayerToWin.put("O_SCISSOR", "P_ROCK");
-
-        rulesForGameToDraw.put("O_ROCK", "P_ROCK");
-        rulesForGameToDraw.put("O_PAPER", "P_PAPER");
-        rulesForGameToDraw.put("O_SCISSOR", "P_SCISSOR");
-
-        rulesForPlayerToLose.put("O_ROCK", "P_SCISSOR");
-        rulesForPlayerToLose.put("O_PAPER", "P_ROCK");
-        rulesForPlayerToLose.put("O_SCISSOR", "P_PAPER");
-
         System.out.println(pipeLine_1("/problem_2/input.txt"));
-
     }
 
     public static ArrayList<String> readInputFile(String filePath) {
@@ -65,20 +30,16 @@ public class ProblemTwoAnotherApproach {
     }
 
     public static boolean doesPlayerWin(String opponentResponse,String playerResponse) {
-        return rulesForPlayerToWin.get(opponentResponse).equals(playerResponse);
+        return WinRules.valueOf(opponentResponse).getValue().equals(playerResponse);
     }
 
     public static boolean doesGameDraw(String opponentResponse, String playerResponse) {
-        return rulesForGameToDraw.get(opponentResponse).equals(playerResponse);
-    }
-
-    public static int getMarks(String key) {
-        return markSet.get(key);
+        return DrawRules.valueOf(opponentResponse).getValue().equals(playerResponse);
     }
 
     public static String[] getResponses(String strategy) {
-        String opponentResponse = reference.get(strategy.split(" ")[0]);
-        String playerResponse = reference.get(strategy.split(" ")[1]);
+        String opponentResponse = Reference.valueOf(strategy.split(" ")[0]).getValue();
+        String playerResponse = Reference.valueOf(strategy.split(" ")[1]).getValue();
         return new String[]{opponentResponse, playerResponse};
     }
 
@@ -87,14 +48,14 @@ public class ProblemTwoAnotherApproach {
         String playerResponse = strategy.split(" ")[1];
 
         if (playerResponse.equals("X")){
-            opponentResponse = reference.get(opponentResponse);
-            playerResponse = rulesForPlayerToLose.get(opponentResponse);
+            opponentResponse = Reference.valueOf(opponentResponse).getValue();
+            playerResponse = LostRules.valueOf(opponentResponse).getValue();
         } else if (playerResponse.equals("Y")) {
-            opponentResponse = reference.get(opponentResponse);
-            playerResponse = rulesForGameToDraw.get(opponentResponse);
+            opponentResponse = Reference.valueOf(opponentResponse).getValue();
+            playerResponse = DrawRules.valueOf(opponentResponse).getValue();
         }else{
-            opponentResponse = reference.get(opponentResponse);
-            playerResponse = rulesForPlayerToWin.get(opponentResponse);
+            opponentResponse = Reference.valueOf(opponentResponse).getValue();
+            playerResponse = WinRules.valueOf(opponentResponse).getValue();
         }
         return new String[]{opponentResponse, playerResponse};
     }
@@ -105,11 +66,11 @@ public class ProblemTwoAnotherApproach {
 
         int marksOfRounds = 0;
         if (doesPlayerWin(opponentResponse,playerResponse)){
-            marksOfRounds += getMarks(playerResponse) + getMarks("WON");
+            marksOfRounds += Score.valueOf(playerResponse).score() + Score.WON.score();
         } else if (doesGameDraw(opponentResponse, playerResponse)) {
-            marksOfRounds += getMarks(playerResponse) + getMarks("DRAW");
+            marksOfRounds += Score.valueOf(playerResponse).score() + Score.DRAW.score();
         }else{
-            marksOfRounds += getMarks(playerResponse) + getMarks("LOST");
+            marksOfRounds += Score.valueOf(playerResponse).score() + Score.LOST.score();
         }
         return marksOfRounds;
     }
@@ -118,8 +79,8 @@ public class ProblemTwoAnotherApproach {
     public static ArrayList<Integer> calculateMarksOfAllRounds(ArrayList<String> strategyList) {
         ArrayList<Integer> totalMarksOfRounds = new ArrayList<>();
         for (String strategy : strategyList) {
-//            totalMarksOfRounds.add(calculateMarksOfEachRound(getResponses(strategy)));
-            totalMarksOfRounds.add(calculateMarksOfEachRound(getResponsesForPartTwo(strategy)));
+            totalMarksOfRounds.add(calculateMarksOfEachRound(getResponses(strategy))); // --> part one
+//            totalMarksOfRounds.add(calculateMarksOfEachRound(getResponsesForPartTwo(strategy))); // --> part two
         }
         return totalMarksOfRounds;
     }
